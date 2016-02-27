@@ -58,7 +58,8 @@ APT_STATE_DIR="$CACHE_DIR/apt/state"
 APT_OPTIONS="-o debug::nolocking=true -o dir::cache=$APT_CACHE_DIR -o dir::state=$APT_STATE_DIR -o Dir::Etc::SourceList=./sources.list"
 cp /etc/apt/sources.list ./sources.list
 echo "deb [trusted=yes] http://apt.zewo.io/deb ./" | tee --append ./sources.list
-apt-get $APT_OPTIONS -y --force-yes -d update install zewo
+apt-get $APT_OPTIONS update
+apt-get $APT_OPTIONS -y --force-yes -d install zewo
 
 # Build Package
 
