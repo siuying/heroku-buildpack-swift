@@ -60,7 +60,11 @@ mkdir -p "$APT_CACHE_DIR/archives/partial"
 mkdir -p "$APT_STATE_DIR/lists/partial"
 cp /etc/apt/sources.list ./sources.list
 echo "deb [trusted=yes] http://apt.zewo.io/deb ./" | tee --append ./sources.list
+
+topic "-----> Updating apt caches"
 apt-get $APT_OPTIONS update
+
+topic "-----> Installing zewo libraries"
 apt-get $APT_OPTIONS -y --force-yes -d install zewo
 
 # Build Package
@@ -87,6 +91,12 @@ set-env() {
 }
 set-env PATH '$HOME/.swift-bin:$PATH'
 set-env LD_LIBRARY_PATH '$HOME/.swift-lib'
-
+set-env PATH "$BUILD_DIR/.apt/usr/bin:$PATH"
+set-env LD_LIBRARY_PATH "$BUILD_DIR/.apt/usr/lib/x86_64-linux-gnu:$BUILD_DIR/.apt/usr/lib/i386-linux-gnu:$BUILD_DIR/.apt/usr/lib:$LD_LIBRARY_PATH"
+set-env LIBRARY_PATH "$BUILD_DIR/.apt/usr/lib/x86_64-linux-gnu:$BUILD_DIR/.apt/usr/lib/i386-linux-gnu:$BUILD_DIR/.apt/usr/lib:$LIBRARY_PATH"
+set-env INCLUDE_PATH "$BUILD_DIR/.apt/usr/include:$INCLUDE_PATH"
+set-env CPATH "$INCLUDE_PATH"
+set-env CPPPATH "$INCLUDE_PATH"
+set-env PKG_CONFIG_PATH "$BUILD_DIR/.apt/usr/lib/x86_64-linux-gnu/pkgconfig:$BUILD_DIR/.apt/usr/lib/i386-linux-gnu/pkgconfig:$BUILD_DIR/.apt/usr/lib/pkgconfig:$PKG_CONFIG_PATH"
 
 source "$BIN_DIR/steps/hooks/post_compile"
