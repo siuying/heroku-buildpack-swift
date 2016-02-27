@@ -61,10 +61,10 @@ mkdir -p "$APT_STATE_DIR/lists/partial"
 cp /etc/apt/sources.list ./sources.list
 echo "deb [trusted=yes] http://apt.zewo.io/deb ./" | tee --append ./sources.list
 
-topic "-----> Updating apt caches"
+echo "-----> Updating apt caches"
 apt-get $APT_OPTIONS update
 
-topic "-----> Installing zewo libraries"
+echo "-----> Installing zewo libraries"
 apt-get $APT_OPTIONS -y --force-yes -d install zewo
 
 export PATH="$BUILD_DIR/.apt/usr/bin:$PATH"
