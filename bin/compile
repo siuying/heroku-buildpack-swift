@@ -56,6 +56,8 @@ export PATH="$CACHE_DIR/clang-$CLANG_VERSION/clang+llvm-$CLANG_VERSION-x86_64-li
 APT_CACHE_DIR="$CACHE_DIR/apt/cache"
 APT_STATE_DIR="$CACHE_DIR/apt/state"
 APT_OPTIONS="-o debug::nolocking=true -o dir::cache=$APT_CACHE_DIR -o dir::state=$APT_STATE_DIR -o Dir::Etc::SourceList=./sources.list"
+mkdir -p "$APT_CACHE_DIR/archives/partial"
+mkdir -p "$APT_STATE_DIR/lists/partial"
 cp /etc/apt/sources.list ./sources.list
 echo "deb [trusted=yes] http://apt.zewo.io/deb ./" | tee --append ./sources.list
 apt-get $APT_OPTIONS update
