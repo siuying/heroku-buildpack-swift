@@ -54,16 +54,19 @@ export PATH="$CACHE_DIR/clang-$CLANG_VERSION/clang+llvm-$CLANG_VERSION-x86_64-li
 # Install Zewo dependency
 
 git clone https://github.com/Zewo/libvenice.git && cd libvenice && \
+    chmod 755 -R . && \
     make && \
     make package && \
     dpkg -i libvenice.deb
 
 git clone https://github.com/Zewo/http_parser.git && cd http_parser && \
+    chmod 755 -R . && \
     make && \
     make package && \
     dpkg -i http_parser.deb
 
 git clone https://github.com/Zewo/uri_parser.git && cd uri_parser && \
+    chmod 755 -R . && \
     make && \
     make package && \
     dpkg -i uri_parser.deb
