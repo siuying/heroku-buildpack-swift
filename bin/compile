@@ -51,6 +51,25 @@ fi
 
 export PATH="$CACHE_DIR/clang-$CLANG_VERSION/clang+llvm-$CLANG_VERSION-x86_64-linux-gnu-ubuntu-14.04/bin:$PATH"
 
+# Install Zewo dependency
+
+git clone https://github.com/Zewo/libvenice.git && cd libvenice && \
+    make && \
+    make package && \
+    dpkg -i libvenice.deb
+
+git clone https://github.com/Zewo/http_parser.git && cd http_parser && \
+    make && \
+    make package && \
+    dpkg -i http_parser.deb
+
+git clone https://github.com/Zewo/uri_parser.git && cd uri_parser && \
+    make && \
+    make package && \
+    dpkg -i uri_parser.deb
+
+# Build Package
+
 cd $BUILD_DIR
 echo "-----> Building Package"
 swift build --configuration release
@@ -74,21 +93,5 @@ set-env() {
 set-env PATH '$HOME/.swift-bin:$PATH'
 set-env LD_LIBRARY_PATH '$HOME/.swift-lib'
 
-# Install Zewo dependency
-
-git clone https://github.com/Zewo/libvenice.git && cd libvenice && \
-    make && \
-    make package && \
-    dpkg -i libvenice.deb
-
-git clone https://github.com/Zewo/http_parser.git && cd http_parser && \
-    make && \
-    make package && \
-    dpkg -i http_parser.deb
-
-git clone https://github.com/Zewo/uri_parser.git && cd uri_parser && \
-    make && \
-    make package && \
-    dpkg -i uri_parser.deb
 
 source "$BIN_DIR/steps/hooks/post_compile"
